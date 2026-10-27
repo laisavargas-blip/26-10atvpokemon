@@ -1,31 +1,20 @@
 import { Router } from "express";
 import pokemonService from "../services/pokemon.service.js";
+import { pokemonController } from "../controller/pokemon.controller.js";
 
-const pokemonRoutes = Router();
+export const pokemonRoutes = Router();
 
-pokemonRoutes.get("/", async (req, res) => {
-    const pokemon = await pokemonService.getAll();
-    return res.json(pokemon);
-});
+pokemonRoutes.get("/", pokemonController.get);
 
-pokemonRoutes.get("/:id", async (req, res) => {
-    const pokemon = await pokemonService.getById(req.params.id);
-    return res.json(pokemon);
-});
 
-pokemonRoutes.post("/", async (req, res) => {
-    const pokemon = await pokemonService.create(req.body);
-    return res.status(201).json(pokemon);
-});
+pokemonRoutes.getById("/:id",pokemonController.getById); 
+   
 
-pokemonRoutes.put("/:id", async (req, res) => {
-    const pokemon = await pokemonService.update(req.body, req.params.id);
-    return res.json(pokemon);
-});
+pokemonRoutes.post("/", pokemonController.create);
+    
 
-pokemonRoutes.delete("/:id", async (req, res) => {
-    await pokemonService.delete(req.params.id);
-    return res.status(204).send();
-});
-
+pokemonRoutes.put("/:id",pokemonController.put); 
+ 
+pokemonRoutes.delete("/:id",pokemonController.delete);
+   
 export default pokemonRoutes;
